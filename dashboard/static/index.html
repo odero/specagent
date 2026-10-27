@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SpecAgent — Dev Dashboard</title>
+<link rel="stylesheet" href="/static/css/dashboard.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<header class="app-header">
+  <div class="header-brand">
+    <span class="brand-pixel">⬛</span>
+    <h1>SpecAgent</h1>
+    <span class="brand-sub">Autonomous Dev Pipeline</span>
+  </div>
+  <div class="header-controls">
+    <span class="conn-indicator" id="connStatus">● CONNECTING</span>
+    <button class="btn btn-ghost" id="btnVizMode">🕹 Pixel Mode</button>
+    <button class="btn btn-primary" id="btnNewTask">+ New Feature</button>
+  </div>
+</header>
+
+<!-- ═══════════════════════ MAIN LAYOUT ══════════════════ -->
+<div class="app-layout">
+
+  <!-- ─── LEFT: PIPELINE TRACKER ─── -->
+  <aside class="panel panel-pipeline">
+    <div class="panel-title">Pipeline</div>
+
+    <div class="task-card" id="taskCard">
+      <div class="task-empty" id="taskEmpty">No active task. Click <strong>+ New Feature</strong> to begin.</div>
+      <div class="task-info hidden" id="taskInfo">
+        <div class="task-title" id="taskTitle">—</div>
+        <div class="task-meta">
+          <span id="taskId" class="tag">—</span>
+          <span id="taskHitm" class="tag tag-hitm">HITM</span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar" id="progressBar" style="width:0%"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">0%</div>
+      </div>
+    </div>
+
+    <div class="phase-list" id="phaseList">
+      <!-- rendered by JS -->
+    </div>
+
+    <div class="hitm-gate hidden" id="hitmGate">
+      <div class="hitm-title">⏸ Awaiting Your Review</div>
+      <div class="hitm-message" id="hitmMessage"></div>
+      <div class="hitm-content" id="hitmContent"></div>
+      <textarea class="hitm-notes" id="hitmNotes" placeholder="Optional notes / feedback…"></textarea>
+      <div class="hitm-actions">
+        <button class="btn btn-danger" id="btnReject">✗ Reject</button>
+        <button class="btn btn-success" id="btnApprove">✓ Approve</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── CENTRE: MAIN VIEW (dashboard / pixel) ─── -->
+  <main class="main-view" id="mainView">
+
+    <!-- Dashboard mode -->
+    <div id="dashView">
+      <div class="agents-grid" id="agentsGrid">
+        <!-- agent cards rendered by JS -->
+      </div>
+      <div class="spec-panel hidden" id="specPanel">
+        <div class="panel-title">Spec Preview <span id="specVersion"></span></div>
+        <div class="spec-content" id="specContent"></div>
+      </div>
+    </div>
+
+    <!-- Pixel art mode -->
+    <div id="pixelView" class="hidden">
+      <div class="pixel-header">
+        <span class="pixel-title">SpecAgent Studios</span>
+        <span class="pixel-subtitle">— Building your feature —</span>
+      </div>
+      <canvas id="officeCanvas" width="800" height="420"></canvas>
+      <div class="pixel-legend" id="pixelLegend"></div>
+    </div>
+  </main>
+
+  <!-- ─── RIGHT: LIVE LOG ─── -->
+  <aside class="panel panel-log">
+    <div class="panel-title">
+      Live Log
+      <button class="btn btn-ghost btn-sm" id="btnClearLog">clear</button>
+    </div>
+    <div class="log-stream" id="logStream">
+      <div class="log-entry log-info">Connecting to agent runtime…</div>
+    </div>
+  </aside>
+
+</div>
+
+<!-- ═══════════════════ NEW TASK MODAL ══════════════════ -->
+<div class="modal-overlay hidden" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-title">New Feature Request</div>
+    <label>Feature title</label>
+    <input class="input" id="inputTitle" placeholder="e.g. User authentication with OAuth2"/>
+    <label>Describe the feature / scenario</label>
+    <textarea class="input textarea" id="inputDesc" rows="6"
+      placeholder="Describe what you want built. The more detail, the better the output.&#10;&#10;Example: Build a REST API for managing a product catalogue with CRUD operations, search, and pagination. Use FastAPI, PostgreSQL, and include OpenAPI docs."></textarea>
+    <div class="modal-row">
+      <label class="toggle-label">
+        <input type="checkbox" id="checkHitm" checked/>
+        Human-in-the-Loop (HITM) mode
+      </label>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="btnModalCancel">Cancel</button>
+      <button class="btn btn-primary" id="btnModalRun">🚀 Run Pipeline</button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/js/pixelart.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

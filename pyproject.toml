@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "specagent"
+version = "0.1.0"
+description = "Autonomous spec-driven software development agent powered by Microsoft Semantic Kernel"
+requires-python = ">=3.11"
+dependencies = []   # managed via requirements.txt
+
+[project.scripts]
+specagent = "main:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
